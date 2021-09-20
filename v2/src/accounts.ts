@@ -123,11 +123,15 @@ export function _triggerBalanceUpdate(
     scheduledWithdrawalShares = withdrawal.value1;
     totalShares = shares + scheduledWithdrawalShares;
   } else {
-    totalShares = vaultAccount.shares;
     let depositIsProcessed = vault.round > vaultAccount.depositInRound;
+
     totalPendingDeposit = depositIsProcessed
       ? BigInt.fromI32(0)
       : vaultAccount.totalPendingDeposit;
+    totalShares =
+      totalPendingDeposit > BigInt.fromI32(0)
+        ? totalPendingDeposit
+        : vaultAccount.shares;
     scheduledWithdrawalShares = vaultAccount.totalScheduledWithdrawal;
   }
 
