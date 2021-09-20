@@ -123,15 +123,20 @@ export function _triggerBalanceUpdate(
     scheduledWithdrawalShares = withdrawal.value1;
     totalShares = shares + scheduledWithdrawalShares;
   } else {
-    let depositIsProcessed = vault.round > vaultAccount.depositInRound;
+    let hasDeposit = vaultAccount.depositInRound >= 1;
+    let depositIsProcessed =
+      hasDeposit && vault.round > vaultAccount.depositInRound;
 
     totalPendingDeposit = depositIsProcessed
       ? BigInt.fromI32(0)
       : vaultAccount.totalPendingDeposit;
-    totalShares =
-      totalPendingDeposit > BigInt.fromI32(0)
-        ? totalPendingDeposit
-        : vaultAccount.shares;
+
+    // We are doing a contract call here when there is a processed deposit
+    // This would only be called for deposits that are processed for a single week
+    totalShares = depositIsProcessed
+      ? vaultContract.shares(accountAddress) +
+        vaultAccount.totalScheduledWithdrawal
+      : vaultAccount.shares;
     scheduledWithdrawalShares = vaultAccount.totalScheduledWithdrawal;
   }
 
