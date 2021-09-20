@@ -52,16 +52,6 @@ export function sharesToAssets(
   return (shareAmount * assetPerShare) / singleShare;
 }
 
-export function assetsToShares(
-  assetAmount: BigInt,
-  assetPerShare: BigInt,
-  decimals: number
-): BigInt {
-  let decimalsU8: u8 = u8(decimals);
-  let singleShare = BigInt.fromI32(10).pow(decimalsU8);
-  return (assetAmount * singleShare) / assetPerShare;
-}
-
 export function getTotalPendingDeposit(
   vault: RibbonThetaVault,
   account: Address
