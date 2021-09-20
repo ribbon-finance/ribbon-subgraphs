@@ -271,7 +271,7 @@ export function handleInitiateWithdraw(event: InitiateWithdraw): void {
     event.params.account,
     event.block.timestamp.toI32(),
     false,
-    false
+    true
   );
 }
 
