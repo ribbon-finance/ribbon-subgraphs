@@ -133,6 +133,7 @@ export function _triggerBalanceUpdate(
 
     // We are doing a contract call here when there is a processed deposit
     // This would only be called for deposits that are processed for a single week
+    // It short circuits for performance reasons bc contract calls are expensive
     totalShares = depositIsProcessed
       ? vaultContract.shares(accountAddress) +
         vaultAccount.totalScheduledWithdrawal
