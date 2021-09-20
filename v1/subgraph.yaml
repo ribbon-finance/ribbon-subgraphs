@@ -37,6 +37,8 @@ dataSources:
           handler: handleTransfer
         - event: CapSet(uint256,uint256,address)
           handler: handleCapSet
+        - event: Migrate(address,address,uint256,uint256)
+          handler: handleMigrate
   - kind: ethereum/contract
     name: RibbonWBTCCoveredCall
     network: mainnet
@@ -72,6 +74,8 @@ dataSources:
           handler: handleTransfer
         - event: CapSet(uint256,uint256,address)
           handler: handleCapSet
+        - event: Migrate(address,address,uint256,uint256)
+          handler: handleMigrate
   - kind: ethereum/contract
     name: RibbonUSDCETHPutVault
     network: mainnet
